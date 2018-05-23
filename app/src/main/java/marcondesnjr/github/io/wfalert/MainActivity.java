@@ -1,5 +1,6 @@
 package marcondesnjr.github.io.wfalert;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -137,8 +138,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            if(position == 0) {
+                return new AlertLayout();
+            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
@@ -146,6 +148,16 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             // Show 3 total pages.
             return 3;
+        }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if(position == 0) {
+                return "Alerts";
+            }else{
+                return "Exemplo";
+            }
         }
     }
 }
