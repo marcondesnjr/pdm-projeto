@@ -28,7 +28,8 @@ public class AlertLayout extends Fragment {
 
     private List<Alert> makeAlerts(){
         ArrayList<Alert> alerts = new ArrayList<>();
-        alerts.add(new Alert(1,"Terra"));
+        alerts.add(new Alert(1,"Gaia(Earth)"));
+        alerts.add(new Alert(2,"Aphrodite(Venus)"));
         return alerts;
     }
 }
