@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                     return new InvasionLayout();
                 case 2:
                     return new FissureLayout();
+                case 3:
+                    return new SortieLayout();
             }
 
             return PlaceholderFragment.newInstance(position + 1);
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Nullable
