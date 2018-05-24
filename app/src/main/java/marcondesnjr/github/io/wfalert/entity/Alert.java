@@ -1,16 +1,25 @@
 package marcondesnjr.github.io.wfalert.entity;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+
 public class Alert {
 
     private int id;
-    private String planeta;
-
-    public Alert(int id, String planeta) {
-        this.id = id;
-        this.planeta = planeta;
-    }
+    private Mission mission;
+    private Reward reward;
+    private int quantidade;
+    private Calendar end;
 
     public Alert() {
+    }
+
+    public Alert(int id, Mission mission, Reward reward, int quantidade, Calendar end) {
+        this.id = id;
+        this.mission = mission;
+        this.reward = reward;
+        this.quantidade = quantidade;
+        this.end = end;
     }
 
     public int getId() {
@@ -21,11 +30,35 @@ public class Alert {
         this.id = id;
     }
 
-    public String getPlaneta() {
-        return planeta;
+    public Mission getMission() {
+        return mission;
     }
 
-    public void setPlaneta(String planeta) {
-        this.planeta = planeta;
+    public void setMission(Mission mission) {
+        this.mission = mission;
+    }
+
+    public Reward getReward() {
+        return reward;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Calendar getEnd() {
+        return end;
+    }
+
+    public void setEnd(Calendar end) {
+        this.end = end;
     }
 }

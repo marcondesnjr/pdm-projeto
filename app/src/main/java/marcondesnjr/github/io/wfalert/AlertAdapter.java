@@ -9,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import marcondesnjr.github.io.wfalert.entity.Alert;
+import marcondesnjr.github.io.wfalert.entity.Mission;
 
 public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHolder>{
 
@@ -34,8 +37,35 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
         Alert alert = alertList.get(position);
-        holder.getTextViewNode().setText(alert.getPlaneta());
-        holder.getImageViewReward().setImageDrawable(context.getResources().getDrawable(R.drawable.credits_pack));
+        Mission mission = alert.getMission();
+        holder.textViewNode.setText(mission.getNome());
+        holder.textViewMissionType.setText(mission.getTipo());
+        holder.textViewFaction.setText(mission.getFaction());
+
+        //Time left
+        long end = alert.getEnd().getTimeInMillis();
+        long start = Calendar.getInstance().getTimeInMillis();
+        long left = TimeUnit.MILLISECONDS.toSeconds(Math.abs(end - start));
+        long sec = left % 60;
+        left = left / 60;
+        long min = left % 60;
+        left = left / 60;
+        long hr = left % 24;
+        long day = left / 24;
+
+        holder.textViewTime.setText(String.format("%d : %d : %d",hr,min,sec));
+
+        int drawableId = 0;
+        switch (alert.getReward()){
+            case FORMA: drawableId = R.drawable.forma;
+            break;
+            case CREDIT: drawableId = R.drawable.credit;
+            break;
+            case REACTOR: drawableId = R.drawable.reactor;
+            break;
+            default: drawableId = R.drawable.credit;
+        }
+        holder.getImageViewReward().setImageDrawable(context.getResources().getDrawable(drawableId));
     }
 
     @Override

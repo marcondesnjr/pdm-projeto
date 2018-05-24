@@ -9,10 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import marcondesnjr.github.io.wfalert.entity.Alert;
+import marcondesnjr.github.io.wfalert.entity.Mission;
+import marcondesnjr.github.io.wfalert.entity.Reward;
 
 public class AlertLayout extends Fragment {
 
@@ -28,8 +33,15 @@ public class AlertLayout extends Fragment {
 
     private List<Alert> makeAlerts(){
         ArrayList<Alert> alerts = new ArrayList<>();
-        alerts.add(new Alert(1,"Gaia(Earth)"));
-        alerts.add(new Alert(2,"Aphrodite(Venus)"));
+        Random r = new Random();
+        for (int i = 0; i < 9; i++) {
+            Mission m = Mission.random();
+            Calendar end = Calendar.getInstance();
+            end.add(Calendar.MINUTE, r.nextInt(70));
+            Alert alert = new Alert(i, m, Reward.values()[r.nextInt(3)], r.nextInt(100), end);
+            alerts.add(alert);
+        }
+
         return alerts;
     }
 }

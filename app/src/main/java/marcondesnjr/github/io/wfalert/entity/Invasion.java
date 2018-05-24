@@ -6,6 +6,7 @@ public class Invasion {
     private String node;
     private String type;
     private int progress;
+    private  Mission mission;
 
     public Invasion() {
     }
@@ -47,5 +48,13 @@ public class Invasion {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
     }
 }

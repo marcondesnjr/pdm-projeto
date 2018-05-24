@@ -7,6 +7,7 @@ public class Fissure {
     private String tier;
     private  String type;
     private String faction;
+    private Mission mission;
 
     public Fissure(int id, String node, String tier, String type, String faction) {
         this.id = id;
@@ -57,5 +58,13 @@ public class Fissure {
 
     public void setFaction(String faction) {
         this.faction = faction;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public void setMission(Mission mission) {
+        this.mission = mission;
     }
 }

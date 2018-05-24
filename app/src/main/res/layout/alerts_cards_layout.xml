@@ -60,7 +60,7 @@
                 android:layout_below="@id/textViewMissionType"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_alignParentRight="true"
                 android:text="1:00:00"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
