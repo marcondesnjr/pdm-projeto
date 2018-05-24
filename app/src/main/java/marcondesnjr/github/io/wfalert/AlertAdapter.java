@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import marcondesnjr.github.io.wfalert.entity.Alert;
@@ -42,16 +43,11 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
         holder.textViewMissionType.setText(mission.getTipo());
         holder.textViewFaction.setText(mission.getFaction());
 
-        //Time left
-        long end = alert.getEnd().getTimeInMillis();
-        long start = Calendar.getInstance().getTimeInMillis();
-        long left = TimeUnit.MILLISECONDS.toSeconds(Math.abs(end - start));
-        long sec = left % 60;
-        left = left / 60;
-        long min = left % 60;
-        left = left / 60;
-        long hr = left % 24;
-        long day = left / 24;
+        Map<Integer,Integer> mapTime = Util.timeLeft(Calendar.getInstance(), alert.getEnd());
+        int hr = mapTime.get(Util.HOUR);
+        int min = mapTime.get(Util.MINUTE);
+        int sec = mapTime.get(Util.SECOND);
+
 
         holder.textViewTime.setText(String.format("%d : %d : %d",hr,min,sec));
 

@@ -34,8 +34,8 @@ public class InvasionLayoutAdapter extends RecyclerView.Adapter<InvasionLayoutAd
     @Override
     public void onBindViewHolder(@NonNull InvasionLayoutHolder holder, int position) {
         Invasion invasion = invasionList.get(position);
-        holder.textViewNode.setText(invasion.getNode());
-        holder.textViewFaction.setText(invasion.getType());
+        holder.textViewNode.setText(invasion.getMission().getNome());
+        holder.textViewFaction.setText(invasion.getMission().getTipo());
         holder.progressBar.setProgress(invasion.getProgress());
     }
 
@@ -56,7 +56,6 @@ public class InvasionLayoutAdapter extends RecyclerView.Adapter<InvasionLayoutAd
             this.textViewNode = itemView.findViewById(R.id.textViewNode);
             this.textViewFaction = itemView.findViewById(R.id.textViewMissionFaction);
             this.progressBar = itemView.findViewById(R.id.progressBar);
-            this.textViewTime = itemView.findViewById(R.id.textViewTime);
         }
     }
 

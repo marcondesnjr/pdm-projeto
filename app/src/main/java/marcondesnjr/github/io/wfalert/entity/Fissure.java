@@ -1,23 +1,22 @@
 package marcondesnjr.github.io.wfalert.entity;
 
+import java.util.Calendar;
+
 public class Fissure {
 
     private int id;
-    private String node;
-    private String tier;
-    private  String type;
-    private String faction;
+    private Tier tier;
     private Mission mission;
-
-    public Fissure(int id, String node, String tier, String type, String faction) {
-        this.id = id;
-        this.node = node;
-        this.tier = tier;
-        this.type = type;
-        this.faction = faction;
-    }
+    private Calendar end;
 
     public Fissure() {
+    }
+
+    public Fissure(int id, Tier tier, Mission mission, Calendar end) {
+        this.id = id;
+        this.tier = tier;
+        this.mission = mission;
+        this.end = end;
     }
 
     public int getId() {
@@ -28,36 +27,12 @@ public class Fissure {
         this.id = id;
     }
 
-    public String getNode() {
-        return node;
-    }
-
-    public void setNode(String node) {
-        this.node = node;
-    }
-
-    public String getTier() {
+    public Tier getTier() {
         return tier;
     }
 
-    public void setTier(String tier) {
+    public void setTier(Tier tier) {
         this.tier = tier;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getFaction() {
-        return faction;
-    }
-
-    public void setFaction(String faction) {
-        this.faction = faction;
     }
 
     public Mission getMission() {
@@ -66,5 +41,13 @@ public class Fissure {
 
     public void setMission(Mission mission) {
         this.mission = mission;
+    }
+
+    public Calendar getEnd() {
+        return end;
+    }
+
+    public void setEnd(Calendar end) {
+        this.end = end;
     }
 }
