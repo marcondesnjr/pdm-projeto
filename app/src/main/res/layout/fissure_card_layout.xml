@@ -22,48 +22,58 @@
                 android:padding="4dp" />
 
             <TextView
-                android:id="@+id/textViewNode"
+                android:id="@+id/textViewFissureNode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_toRightOf="@id/relicImage"
                 android:text="Aphrodite (Venus)"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textViewMissionType"
+                android:id="@+id/textViewFissureTier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewNode"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/textViewFissureNode"
+                android:text="- Lith"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textViewFissureType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewFissureNode"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_toRightOf="@id/relicImage"
                 android:text="Mobile Defense"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView
-                android:id="@+id/textViewMissionFaction"
+                android:id="@+id/textViewFissureFaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewNode"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/textViewFissureNode"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/textViewMissionType"
-                android:text="Corpus"
+                android:layout_toRightOf="@id/textViewFissureType"
+                android:text="- Corpus"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView
-                android:id="@+id/textViewTime"
+                android:id="@+id/textViewFissureTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewMissionType"
+                android:layout_below="@id/textViewFissureType"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
                 android:text="1:00:00"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 

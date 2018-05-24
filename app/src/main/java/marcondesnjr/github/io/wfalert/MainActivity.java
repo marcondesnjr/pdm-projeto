@@ -134,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new AlertLayout();
                 case 1:
-                    return  new InvasionLayout();
+                    return new InvasionLayout();
+                case 2:
+                    return new FissureLayout();
             }
 
             return PlaceholderFragment.newInstance(position + 1);
