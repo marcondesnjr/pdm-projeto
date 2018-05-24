@@ -130,9 +130,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0) {
-                return new AlertLayout();
+            switch (position){
+                case 0:
+                    return new AlertLayout();
+                case 1:
+                    return  new InvasionLayout();
             }
+
             return PlaceholderFragment.newInstance(position + 1);
         }
 
