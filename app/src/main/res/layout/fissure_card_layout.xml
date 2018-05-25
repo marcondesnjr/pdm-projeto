@@ -2,82 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:animateLayoutChanges="true">
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/alertCardView"
+        android:id="@+id/fissureCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:animateLayoutChanges="true">
+        android:layout_margin="5dp">
 
         <RelativeLayout
-            android:id="@+id/alertRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:animateLayoutChanges="true">
+            android:padding="8dp">
 
             <ImageView
-                android:id="@+id/alertRewardImage"
+                android:id="@+id/relicImage"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:padding="4dp" />
 
             <TextView
-                android:id="@+id/textViewNode"
+                android:id="@+id/textViewFissureNode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_toRightOf="@id/relicImage"
                 android:text="Aphrodite (Venus)"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textViewMissionType"
+                android:id="@+id/textViewFissureTier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewNode"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/textViewFissureNode"
+                android:text="- Lith"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textViewFissureType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewFissureNode"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_toRightOf="@id/relicImage"
                 android:text="Mobile Defense"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView
-                android:id="@+id/textViewMissionFaction"
+                android:id="@+id/textViewFissureFaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewNode"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/textViewFissureNode"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/textViewMissionType"
-                android:text="Corpus"
+                android:layout_toRightOf="@id/textViewFissureType"
+                android:text="- Corpus"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView
-                android:id="@+id/textViewTime"
+                android:id="@+id/textViewFissureTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textViewMissionType"
+                android:layout_below="@id/textViewFissureType"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_alignParentRight="true"
                 android:text="1:00:00"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textStyle="bold" />
-
-            <TableLayout
-                android:id="@+id/alertRewardsTable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/alertRewardImage"
-                android:visibility="gone">
-
-            </TableLayout>
-
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 
