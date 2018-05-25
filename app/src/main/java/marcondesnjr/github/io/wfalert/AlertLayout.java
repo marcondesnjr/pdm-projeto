@@ -2,6 +2,7 @@ package marcondesnjr.github.io.wfalert;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ public class AlertLayout extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         AlertAdapter alertAdapter = new AlertAdapter(this.getContext(),makeAlerts());
         recyclerView.setAdapter(alertAdapter);
+        TransitionManager.beginDelayedTransition(container);
         return  recyclerView;
     }
 
@@ -38,10 +40,14 @@ public class AlertLayout extends Fragment {
             Mission m = Mission.random();
             Calendar end = Calendar.getInstance();
             end.add(Calendar.MINUTE, r.nextInt(70));
-            Alert alert = new Alert(i, m, Reward.values()[r.nextInt(3)], r.nextInt(100), end);
+            List<Reward> rewards = new ArrayList<>();
+            rewards.add(Reward.values()[r.nextInt(3)]);
+            rewards.add(Reward.values()[r.nextInt(3)]);
+            Alert alert = new Alert(i, m, rewards, r.nextInt(100), end);
             alerts.add(alert);
         }
 
         return alerts;
     }
+
 }

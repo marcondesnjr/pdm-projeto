@@ -2,19 +2,20 @@ package marcondesnjr.github.io.wfalert.entity;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.List;
 
 public class Alert {
 
     private int id;
     private Mission mission;
-    private Reward reward;
+    private List<Reward> reward;
     private int quantidade;
     private Calendar end;
 
     public Alert() {
     }
 
-    public Alert(int id, Mission mission, Reward reward, int quantidade, Calendar end) {
+    public Alert(int id, Mission mission, List<Reward> reward, int quantidade, Calendar end) {
         this.id = id;
         this.mission = mission;
         this.reward = reward;
@@ -38,11 +39,11 @@ public class Alert {
         this.mission = mission;
     }
 
-    public Reward getReward() {
+    public List<Reward> getReward() {
         return reward;
     }
 
-    public void setReward(Reward reward) {
+    public void setReward(List<Reward> reward) {
         this.reward = reward;
     }
 
