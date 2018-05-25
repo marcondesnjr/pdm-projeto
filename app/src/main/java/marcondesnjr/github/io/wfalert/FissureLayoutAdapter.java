@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import marcondesnjr.github.io.wfalert.entity.Fissure;
 
@@ -34,10 +36,32 @@ public class FissureLayoutAdapter extends RecyclerView.Adapter<FissureLayoutAdap
     @Override
     public void onBindViewHolder(@NonNull FissureLayoutHolder holder, int position) {
         Fissure fissure = fissureList.get(position);
-        holder.textViewFissureNode.setText(fissure.getNode());
-        holder.textViewFissureTier.setText(fissure.getTier());
-        holder.textViewFissureFaction.setText(fissure.getFaction());
-        holder.textViewFissureType.setText(fissure.getType());
+        holder.textViewFissureNode.setText(fissure.getMission().getNome());
+        holder.textViewFissureTier.setText(fissure.getTier().name());
+        holder.textViewFissureFaction.setText(fissure.getMission().getFaction());
+        holder.textViewFissureType.setText(fissure.getMission().getTipo());
+
+        //Set time left
+        Map<Integer,Integer> mapTime = Util.timeLeft(Calendar.getInstance(), fissure.getEnd());
+        int hr = mapTime.get(Util.HOUR);
+        int min = mapTime.get(Util.MINUTE);
+        int sec = mapTime.get(Util.SECOND);
+        holder.textViewFissureTime.setText(String.format("%d : %d : %d",hr,min,sec));
+
+
+        //Set Icon
+        int drawableId = 0;
+        switch (fissure.getTier()){
+            case LITH: drawableId = R.drawable.lith;
+            break;
+            case MESO: drawableId = R.drawable.meso;
+            break;
+            case NEO: drawableId = R.drawable.neo;
+            break;
+            case AXI: drawableId = R.drawable.axi;
+        }
+        holder.relicView.setImageDrawable(ctx.getResources().getDrawable(drawableId));
+
     }
 
     @Override
@@ -56,6 +80,7 @@ public class FissureLayoutAdapter extends RecyclerView.Adapter<FissureLayoutAdap
 
         public FissureLayoutHolder(View itemView) {
             super(itemView);
+            this.relicView = itemView.findViewById(R.id.relicImage);
             this.textViewFissureNode = itemView.findViewById(R.id.textViewFissureNode);
             this.textViewFissureTier = itemView.findViewById(R.id.textViewFissureTier);
             this.textViewFissureType = itemView.findViewById(R.id.textViewFissureType);

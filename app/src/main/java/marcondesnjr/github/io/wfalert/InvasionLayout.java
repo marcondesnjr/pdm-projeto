@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Random;
 
 import marcondesnjr.github.io.wfalert.entity.Invasion;
+import marcondesnjr.github.io.wfalert.entity.Mission;
+import marcondesnjr.github.io.wfalert.entity.Reward;
 
 public class InvasionLayout extends Fragment {
 
@@ -29,12 +31,13 @@ public class InvasionLayout extends Fragment {
     }
 
     private List<Invasion> tmpMakeInv() {
-        String[] nodes = {"Epimetheus (Saturn)","Perdita (Uranus)","Nix (Pluto)","Elion (Mercury)", "Ultor (Mars)"};
-        String[] types = {"Infested vs Grineer", "Corpus vs Grineer", "Infested vs Corpus"};
         List<Invasion> list = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 5; i++) {
-            list.add(new Invasion(i,nodes[r.nextInt(5)],types[r.nextInt(3)],r.nextInt(101)));
+            Mission m = Mission.random();
+            Invasion inv = new Invasion(i,r.nextInt(101),m, Reward.values()[r.nextInt(3)],r.nextInt(5),
+                    Reward.values()[r.nextInt(3)],r.nextInt(5));
+            list.add(inv);
         }
         return list;
     }

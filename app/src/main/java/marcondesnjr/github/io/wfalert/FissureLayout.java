@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 import marcondesnjr.github.io.wfalert.entity.Fissure;
+import marcondesnjr.github.io.wfalert.entity.Mission;
+import marcondesnjr.github.io.wfalert.entity.Tier;
 
 public class FissureLayout extends Fragment {
 
@@ -29,16 +32,13 @@ public class FissureLayout extends Fragment {
     }
 
     private List<Fissure> tmpMakeList() {
-        String[] nodes = {"Epimetheus (Saturn)","Perdita (Uranus)","Nix (Pluto)","Elion (Mercury)", "Ultor (Mars)"};
-        String[] types = {"Mobile Defense", "Extermination", "Survival"};
-        String[] tier = {"Lith","Meso", "Neo", "Axi"};
-        String[] faction = {"Corpus", "Grineer", "Infested"};
         Random r = new Random();
 
         List<Fissure> list = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
-            Fissure fis = new Fissure(i, nodes[r.nextInt(5)],tier[r.nextInt(4)],types[r.nextInt(3)],
-                    faction[r.nextInt(3)]);
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, r.nextInt(70));
+            Fissure fis = new Fissure(i, Tier.values()[r.nextInt(4)], Mission.random(), cal);
             list.add(fis);
         }
 

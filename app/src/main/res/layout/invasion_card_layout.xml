@@ -44,17 +44,29 @@
                 android:layout_marginRight="5dp"
                 android:progress="25"/>
 
-            <TextView
-                android:id="@+id/textViewTime"
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:id="@+id/invasionTableReward"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/progressBar"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="5dp"
-                android:text="1:00:00"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"/>
+                android:visibility="gone">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
 
         </RelativeLayout>
 
