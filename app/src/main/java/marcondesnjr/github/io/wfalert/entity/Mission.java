@@ -1,47 +1,46 @@
 package marcondesnjr.github.io.wfalert.entity;
 
-import java.util.Random;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Mission {
-
-    private String id;
-    private String nome;
-    private String tipo;
+public class Mission implements Parcelable {
+    private String type;
+    private String location;
+    private String modifier;
     private String faction;
 
     public Mission() {
     }
 
-    public Mission(String id, String nome, String tipo, String faction) {
-        this.id = id;
-        this.nome = nome;
-        this.tipo = tipo;
-        this.faction = faction;
+    public Mission(Parcel parcel) {
+        type = parcel.readString();
+        location = parcel.readString();
+        modifier = parcel.readString();
+        faction = parcel.readString();
     }
 
-    public String getId() {
-        return id;
+    public String getType() {
+        return type;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getNome() {
-        return nome;
+    public String getLocation() {
+        return location;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-
-    public String getTipo() {
-        return tipo;
+    public String getModifier() {
+        return modifier;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setModifier(String modifier) {
+        this.modifier = modifier;
     }
 
     public String getFaction() {
@@ -52,17 +51,38 @@ public class Mission {
         this.faction = faction;
     }
 
-    @Deprecated
-    public static Mission random(){
-
-        String[] nodes = {"Epimetheus (Saturn)","Perdita (Uranus)","Nix (Pluto)","Elion (Mercury)", "Ultor (Mars)"};
-        String[] types = {"Mobile Defense", "Extermination", "Survival"};
-        String[] faction = {"Corpus", "Grineer", "Infested"};
-        Random r = new Random();
-
-
-        return new Mission("Node",nodes[r.nextInt(5)],types[r.nextInt(3)],faction[r.nextInt(3)]);
-
+    @Override
+    public String toString() {
+        return "Mission{" +
+                "type='" + type + '\'' +
+                ", location='" + location + '\'' +
+                ", modifier='" + modifier + '\'' +
+                ", faction='" + faction + '\'' +
+                '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(type);
+        dest.writeString(location);
+        dest.writeString(modifier);
+        dest.writeString(faction);
+    }
+
+    private Parcelable.Creator<Mission> CREATOR = new Parcelable.Creator<Mission>() {
+        @Override
+        public Mission createFromParcel(Parcel source) {
+            return new Mission(source);
+        }
+
+        @Override
+        public Mission[] newArray(int size) {
+            return new Mission[size];
+        }
+    };
 }

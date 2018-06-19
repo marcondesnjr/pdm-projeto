@@ -37,8 +37,8 @@ public class InvasionLayoutAdapter extends RecyclerView.Adapter<InvasionLayoutAd
     @Override
     public void onBindViewHolder(@NonNull InvasionLayoutHolder holder, int position) {
         Invasion invasion = invasionList.get(position);
-        holder.textViewNode.setText(invasion.getMission().getNome());
-        holder.textViewFaction.setText(invasion.getMission().getTipo());
+        holder.textViewNode.setText(invasion.getMission().getLocation());
+        holder.textViewFaction.setText(invasion.getMission().getType());
         holder.progressBar.setProgress(invasion.getProgress());
 
         TableLayout tbl = holder.tableLayout;
@@ -48,12 +48,12 @@ public class InvasionLayoutAdapter extends RecyclerView.Adapter<InvasionLayoutAd
         TableLayout.LayoutParams lp = new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT);
 
         TextView tvAt = new TextView(tableRow.getContext());
-        tvAt.setText(invasion.getAttReward().name());
+      //  tvAt.setText(invasion.getAttReward().name());
         TextView tvAtQt = new TextView(tableRow.getContext());
         tvAtQt.setText(invasion.getAttRewardQt()+"");
 
         TextView tvDef = new TextView(tableRow.getContext());
-        tvAt.setText(invasion.getDefReward().name());
+      //  tvAt.setText(invasion.getDefReward().name());
         TextView tvDefQt = new TextView(tableRow.getContext());
         tvAtQt.setText(invasion.getDefRewardQt()+"");
 

@@ -32,13 +32,7 @@ public class InvasionLayout extends Fragment {
 
     private List<Invasion> tmpMakeInv() {
         List<Invasion> list = new ArrayList<>();
-        Random r = new Random();
-        for (int i = 0; i < 5; i++) {
-            Mission m = Mission.random();
-            Invasion inv = new Invasion(i,r.nextInt(101),m, Reward.values()[r.nextInt(3)],r.nextInt(5),
-                    Reward.values()[r.nextInt(3)],r.nextInt(5));
-            list.add(inv);
-        }
+
         return list;
     }
 }
