@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import marcondesnjr.github.io.wfalert.entity.Fissure;
+import marcondesnjr.github.io.wfalert.entity.Mission;
 
 public class FissureLayoutAdapter extends RecyclerView.Adapter<FissureLayoutAdapter.FissureLayoutHolder>{
 
@@ -23,6 +25,14 @@ public class FissureLayoutAdapter extends RecyclerView.Adapter<FissureLayoutAdap
     public FissureLayoutAdapter(Context ctx, List<Fissure> fissureList) {
         this.ctx = ctx;
         this.fissureList = fissureList;
+    }
+
+    public void addItem(Fissure fissure){
+        if(this.fissureList == null){
+            this.fissureList = new ArrayList<>();
+        }
+        this.fissureList.add(fissure);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -36,29 +46,25 @@ public class FissureLayoutAdapter extends RecyclerView.Adapter<FissureLayoutAdap
     @Override
     public void onBindViewHolder(@NonNull FissureLayoutHolder holder, int position) {
         Fissure fissure = fissureList.get(position);
-        holder.textViewFissureNode.setText(fissure.getMission().getNome());
-        holder.textViewFissureTier.setText(fissure.getTier().name());
+        holder.textViewFissureNode.setText(fissure.getMission().getLocation());
+        holder.textViewFissureTier.setText(fissure.getMission().getModifier());
         holder.textViewFissureFaction.setText(fissure.getMission().getFaction());
-        holder.textViewFissureType.setText(fissure.getMission().getTipo());
+        holder.textViewFissureType.setText(fissure.getMission().getType());
 
         //Set time left
-        Map<Integer,Integer> mapTime = Util.timeLeft(Calendar.getInstance(), fissure.getEnd());
-        int hr = mapTime.get(Util.HOUR);
-        int min = mapTime.get(Util.MINUTE);
-        int sec = mapTime.get(Util.SECOND);
-        holder.textViewFissureTime.setText(String.format("%d : %d : %d",hr,min,sec));
-
+        ViewUtils.startCountdownTime(holder.textViewFissureTime, fissure.getExpiry(), "%02d : %02d : %02d");
 
         //Set Icon
         int drawableId = 0;
-        switch (fissure.getTier()){
-            case LITH: drawableId = R.drawable.lith;
+        String modifier = fissure.getMission().getModifier();
+        switch (modifier){
+            case "Lith": drawableId = R.drawable.lith;
             break;
-            case MESO: drawableId = R.drawable.meso;
+            case "Meso": drawableId = R.drawable.meso;
             break;
-            case NEO: drawableId = R.drawable.neo;
+            case "Neo": drawableId = R.drawable.neo;
             break;
-            case AXI: drawableId = R.drawable.axi;
+            case "Axi": drawableId = R.drawable.axi;
         }
         holder.relicView.setImageDrawable(ctx.getResources().getDrawable(drawableId));
 

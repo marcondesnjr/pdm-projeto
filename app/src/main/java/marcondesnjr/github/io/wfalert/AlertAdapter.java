@@ -1,30 +1,40 @@
 package marcondesnjr.github.io.wfalert;
 
 import android.animation.ValueAnimator;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.Calendar;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import marcondesnjr.github.io.wfalert.entity.Alert;
 import marcondesnjr.github.io.wfalert.entity.Mission;
 import marcondesnjr.github.io.wfalert.entity.Reward;
+import marcondesnjr.github.io.wfalert.services.LoadImagesService;
 
-public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHolder>{
+public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHolder> {
 
     private Context context;
     private List<Alert> alertList;
@@ -34,54 +44,81 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
         this.alertList = alertList;
     }
 
+    public void addItem(Alert item) {
+        if (alertList == null) {
+            alertList = new ArrayList<>();
+        }
+        alertList.add(item);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public AlertViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.alerts_cards_layout, parent,false);
-        return  new AlertViewHolder(view);
+        View view = layoutInflater.inflate(R.layout.alerts_cards_layout, parent, false);
+        return new AlertViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AlertViewHolder holder, int position) {
         Alert alert = alertList.get(position);
         Mission mission = alert.getMission();
-        holder.textViewNode.setText(mission.getNome());
-        holder.textViewMissionType.setText(mission.getTipo());
+        holder.textViewNode.setText(mission.getLocation());
+        holder.textViewMissionType.setText(mission.getType());
         holder.textViewFaction.setText(mission.getFaction());
+        holder.textViewMinLvl.setText(alert.getMinLevel() + "");
+        holder.textViewMaxLvl.setText(alert.getMaxLevel() + "");
 
-        Map<Integer,Integer> mapTime = Util.timeLeft(Calendar.getInstance(), alert.getEnd());
-        int hr = mapTime.get(Util.HOUR);
-        int min = mapTime.get(Util.MINUTE);
-        int sec = mapTime.get(Util.SECOND);
+        ViewUtils.startCountdownTime(holder.textViewTime, alert.getExpiry(), "%02d : %02d : %02d");
 
-
-        holder.textViewTime.setText(String.format("%d : %d : %d",hr,min,sec));
-
-        int drawableId = 0;
-        switch (alert.getReward().get(0)){
-            case FORMA: drawableId = R.drawable.forma;
-            break;
-            case CREDIT: drawableId = R.drawable.credit;
-            break;
-            case REACTOR: drawableId = R.drawable.reactor;
-            break;
-            default: drawableId = R.drawable.credit;
+        if (alert.getRewards().size() >= 1) {
+            if (alert.getRewards().size() > 1 && alert.getRewards().get(0).getName().equals("Credits")) {
+                startLoadImage(alert.getRewards().get(1).getImgRef(), holder.imageViewReward);
+            } else {
+                startLoadImage(alert.getRewards().get(0).getImgRef(), holder.imageViewReward);
+            }
+        } else {
+            holder.imageViewReward.setImageDrawable(context.getResources().getDrawable(R.drawable.credit));
         }
-        holder.imageViewReward.setImageDrawable(context.getResources().getDrawable(drawableId));
+
 
         //Tabela recompensas
         TableLayout tbl = holder.rewardsTable;
         tbl.removeAllViews();
-        for (Reward r : alert.getReward()){
-            TableRow tbr = new TableRow(tbl.getContext());
-            TextView textView = new TextView(tbr.getContext());
-            textView.setText(r.name());
-            tbr.addView(textView);
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            tbl.addView(tbr,lp);
+        for (Reward r : alert.getRewards()) {
+            TableRow tableRow = new TableRow(tbl.getContext());
+
+            TextView name = new TextView(tableRow.getContext());
+            name.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            name.setText(r.getName());
+            tableRow.addView(name);
+
+            TextView quant = new TextView(tableRow.getContext());
+            quant.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT, 1f));
+            quant.setText(r.getQuant() + "");
+            quant.setGravity(Gravity.END);
+
+            tableRow.addView(quant);
+            tableRow.setWeightSum(1);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
+            lp.weight = 1;
+            tbl.addView(tableRow, lp);
         }
 
+    }
+
+
+    private void startLoadImage(String img, ImageView view) {
+        Intent intent = new Intent(this.context, LoadImagesService.class);
+        intent.putExtra("imgId", img);
+        intent.putExtra("bcListener", img);
+        context.startService(intent);
+
+        IntentFilter filter = new IntentFilter(img);
+        LocalBroadcastManager.getInstance(context).registerReceiver(new ImgLoadListener(view, img), filter);
     }
 
     @Override
@@ -98,8 +135,10 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
         private TextView textViewFaction;
         private TextView textViewTime;
         private TableLayout rewardsTable;
+        private TextView textViewMinLvl;
+        private TextView textViewMaxLvl;
 
-        public AlertViewHolder(View itemView) {
+        private AlertViewHolder(View itemView) {
             super(itemView);
             this.imageViewReward = itemView.findViewById(R.id.alertRewardImage);
             this.textViewNode = itemView.findViewById(R.id.textViewNode);
@@ -107,16 +146,20 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
             this.textViewFaction = itemView.findViewById(R.id.textViewMissionFaction);
             this.textViewTime = itemView.findViewById(R.id.textViewTime);
             this.rewardsTable = itemView.findViewById(R.id.alertRewardsTable);
+            this.textViewMinLvl = itemView.findViewById(R.id.textViewMinLvl);
+            this.textViewMaxLvl = itemView.findViewById(R.id.textViewMaxLvl);
 
             itemView.findViewById(R.id.alertCardView).setOnClickListener(new AlertAdapter.OnClickListener());
 
 
         }
 
-
+        public ImageView getImageViewReward() {
+            return imageViewReward;
+        }
     }
 
-    class OnClickListener implements View.OnClickListener{
+    class OnClickListener implements View.OnClickListener {
 
 
         private int originalHeight = 0;
@@ -184,4 +227,47 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
 
     }
 
+    class ImgLoadListener extends BroadcastReceiver {
+
+        private ImageView imgView;
+        private String srcName;
+
+        public ImgLoadListener(ImageView imgView, String srcName) {
+            this.imgView = imgView;
+            this.srcName = srcName;
+        }
+
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+
+            new LoadImagesTask(imgView,context).execute(intent);
+
+        }
+    }
+
+
+    private static class LoadImagesTask extends AsyncTask<Intent, Void, Drawable>{
+
+        private WeakReference<ImageView> imgView;
+        private WeakReference<Context> context;
+
+        private LoadImagesTask(ImageView imgView, Context contex) {
+            this.imgView = new WeakReference<>(imgView);
+            this.context = new WeakReference<>(contex);
+        }
+
+        @Override
+        protected Drawable doInBackground(Intent... intents) {
+            byte[] img = intents[0].getByteArrayExtra("img");
+            Bitmap b = BitmapFactory.decodeByteArray(img, 0, img.length);
+            Bitmap sBit = Bitmap.createScaledBitmap(b, 120, 120, false);
+            b.recycle();
+            return  new BitmapDrawable(context.get().getResources(), sBit);
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            imgView.get().setImageDrawable(drawable);
+        }
+    }
 }

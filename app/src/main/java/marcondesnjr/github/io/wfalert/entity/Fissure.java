@@ -1,38 +1,26 @@
 package marcondesnjr.github.io.wfalert.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 
-public class Fissure {
+public class Fissure implements Parcelable {
 
-    private int id;
-    private Tier tier;
+    private String id;
     private Mission mission;
-    private Calendar end;
+    private Calendar expiry;
 
     public Fissure() {
     }
 
-    public Fissure(int id, Tier tier, Mission mission, Calendar end) {
-        this.id = id;
-        this.tier = tier;
-        this.mission = mission;
-        this.end = end;
-    }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public Tier getTier() {
-        return tier;
-    }
-
-    public void setTier(Tier tier) {
-        this.tier = tier;
     }
 
     public Mission getMission() {
@@ -43,11 +31,41 @@ public class Fissure {
         this.mission = mission;
     }
 
-    public Calendar getEnd() {
-        return end;
+    public Calendar getExpiry() {
+        return expiry;
     }
 
-    public void setEnd(Calendar end) {
-        this.end = end;
+    public void setExpiry(Calendar expiry) {
+        this.expiry = expiry;
     }
+
+    protected Fissure(Parcel in) {
+        id = in.readString();
+        mission = in.readParcelable(Mission.class.getClassLoader());
+    }
+
+    public static final Creator<Fissure> CREATOR = new Creator<Fissure>() {
+        @Override
+        public Fissure createFromParcel(Parcel in) {
+            return new Fissure(in);
+        }
+
+        @Override
+        public Fissure[] newArray(int size) {
+            return new Fissure[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeParcelable(mission, flags);
+    }
+
+
 }

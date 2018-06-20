@@ -16,13 +16,13 @@
             android:id="@+id/alertRelativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/alertRewardImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:padding="4dp" />
 
             <TextView
@@ -47,13 +47,23 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewNode"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/textViewMissionType"
+                android:text="-" />
+
+            <TextView
                 android:id="@+id/textViewMissionFaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewNode"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/textViewMissionType"
+                android:layout_toRightOf="@id/textView10"
                 android:text="Corpus"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
@@ -61,22 +71,55 @@
                 android:id="@+id/textViewTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@id/textViewMissionType"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_alignParentRight="true"
-                android:text="1:00:00"
+                android:text="Expired"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textStyle="bold" />
 
             <TableLayout
                 android:id="@+id/alertRewardsTable"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/alertRewardImage"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:visibility="gone">
 
             </TableLayout>
+
+            <TextView
+                android:id="@+id/textViewMinLvl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/alertRewardImage"
+                android:layout_below="@id/textViewMissionType"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="15" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textViewMinLvl"
+                android:layout_below="@id/textViewMissionType"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/textViewMaxLvl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textView13"
+                android:layout_below="@id/textViewMissionFaction"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="20" />
 
 
         </RelativeLayout>
